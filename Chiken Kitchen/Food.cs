@@ -19,10 +19,13 @@ namespace Chiken_Kitchen
                 Console.WriteLine("We dont have enough ingredients " + Name + " " + Count);
                 return;
             }
-            int i = 0;
+            CookWithoutCheck(allIngredients);
+        }
+        public override void CookWithoutCheck(List<Ingredient> allIngredients)
+        {
             foreach (Ingredient ingredient in Recipe)
             {
-                if (ingredient is Food && Count<=0)
+                if (ingredient is Food && Count <= 0)
                 {
                     ingredient.Cook(allIngredients);
                     UseIngredient(allIngredients, ingredient);
@@ -33,19 +36,16 @@ namespace Chiken_Kitchen
         }
         public override bool isEnoughIngredients(List<Ingredient> allIngredients)
         {
-            foreach (Ingredient ingredient in Recipe)
-            {
-                if (ingredient.Count <= 0)
-                {
-                    if (ingredient is Food)//if the ingredient is food and there are not enough ingredients to cook it then return false
-                    {
-                        if (ingredient.isEnoughIngredients(allIngredients))
-                        {
-                            continue;
-                        }
-                        else return false;
-                    }
-                    else return false;//else not enough ingredients
+            List<Ingredient> ingredientsFound = new List<Ingredient>();
+            ingredientsFound.AddRange(allIngredients);
+            foreach (Ingredient ingredientRecipe in Recipe) {
+                foreach (Ingredient ingredient in ingredientsFound)
+                    if (ingredientRecipe is Food && ingredientRecipe.Name == ingredient.Name)
+                        while (ingredientRecipe.Count >= ingredient.Count) ingredient.CookWithoutCheck(ingredientsFound);
+            }
+            foreach (Ingredient ingredient in ingredientsFound) {
+                if (ingredient.Count <= 0) {
+                    return false;
                 }
             }
             return true;

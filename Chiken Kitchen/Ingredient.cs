@@ -21,6 +21,10 @@ namespace Chiken_Kitchen
         {
             throw new NotImplementedException();
         }
+        public virtual void CookWithoutCheck(List<Ingredient> allIngredients)
+        {
+            throw new NotImplementedException();
+        }
 
         public virtual bool isEnoughIngredients(List<Ingredient> allIngredients)
         {
