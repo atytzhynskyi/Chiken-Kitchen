@@ -17,12 +17,12 @@ namespace Chiken_Kitchen
         {
             Name = _Name;
         }
-        public virtual void Cook() 
+        public virtual void Cook(List<Ingredient> allIngredients) 
         {
             throw new NotImplementedException();
         }
 
-        public virtual bool isEnoughIngredients()
+        public virtual bool isEnoughIngredients(List<Ingredient> allIngredients)
         {
             throw new NotImplementedException();
         }
