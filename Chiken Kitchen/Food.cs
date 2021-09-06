@@ -15,7 +15,7 @@ namespace Chiken_Kitchen
         {
             if (!isEnoughIngredients())
             {
-                Console.WriteLine("We dont have enough ingredients");
+                Console.WriteLine("We dont have enough ingredients " + Name + " " + Count);
                 return;
             }
             foreach (Ingredient ingredient in Recipe)
@@ -24,18 +24,25 @@ namespace Chiken_Kitchen
                 {
                     ingredient.Cook();
                 }
-                else ingredient.Count -= 1;
+                else ingredient.Count--;
             }
+            Count++;
         }
         public override bool isEnoughIngredients()
         {
             foreach (Ingredient ingredient in Recipe)
             {
+
+                Console.WriteLine("check " + Name + Count);
                 if (ingredient.Count == 0)
                 {
                     if (ingredient is Food)//if the ingredient is food and there are not enough ingredients to cook it then return false
                     {
-                        if(!ingredient.isEnoughIngredients()) return false;
+                        if (ingredient.isEnoughIngredients())
+                        {
+                            continue;
+                        }
+                        else return false;
                     }
                     else return false;//else not enough ingredients
                 }
