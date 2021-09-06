@@ -6,10 +6,13 @@ namespace Chiken_Kitchen
 {
     class Food : Ingredient
     {
-        List<Ingredient> Recipe;
+        public List<Ingredient> Recipe = new List<Ingredient>();
         public Food(string _Name, params Ingredient[] _Recipe) : base(_Name)
         {
-            Recipe = new List<Ingredient>();
+            Recipe.AddRange(_Recipe);
+        }
+        public Food(string _Name, int _Count, params Ingredient[] _Recipe) : base(_Name, _Count)
+        {
             Recipe.AddRange(_Recipe);
         }
         public override void Cook(List<Ingredient> allIngredients)

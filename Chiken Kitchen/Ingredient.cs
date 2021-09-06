@@ -16,6 +16,7 @@ namespace Chiken_Kitchen
         public Ingredient(string _Name)
         {
             Name = _Name;
+            Count = 1;
         }
         public virtual void Cook(List<Ingredient> allIngredients) 
         {
