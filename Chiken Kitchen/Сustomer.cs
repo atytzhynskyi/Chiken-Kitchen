@@ -4,23 +4,41 @@ using System.Text;
 
 namespace Chiken_Kitchen
 {
-    class Сustomer
+    class Customer
     {
         public string Name;
         public Ingredient Order;
         public List<Ingredient> Allergies = new List<Ingredient>();
-        public Сustomer(string _Name, params Ingredient[] _Allergies)
+        public Customer(string _Name, params Ingredient[] _Allergies)
         {
             Name = _Name;
             Allergies.AddRange(_Allergies);
         }
-        public Сustomer(string _Name)
+        public Customer(string _Name)
         {
             Name = _Name;
         }
-        public void SetOrder(Ingredient _Order)
+        public void SetOrder(Ingredient _Order, List<Ingredient> allIngredients)
         {
-            Order = _Order;
+            foreach(Ingredient ingredient in allIngredients)
+            {
+                if (_Order.Name == ingredient.Name)
+                {
+                    Order = ingredient;
+                    Order.Count = 1;
+                }
+            }
+        }
+        public void SetOrder(Ingredient _Order, List<Ingredient> allIngredients, int OrderCount)
+        {
+            foreach (Ingredient ingredient in allIngredients)
+            {
+                if (_Order.Name == ingredient.Name)
+                {
+                    Order = ingredient;
+                    Order.Count = OrderCount;
+                }
+            }
         }
         public void GiveFood(List<Ingredient> allIngredients)
         {
@@ -28,25 +46,17 @@ namespace Chiken_Kitchen
             {
                 if (ingredient.Name == Order.Name)
                 {
-                    if (ingredient.Count <= 0)
+                    if (ingredient.Count < Order.Count)
                     {
-                        Console.WriteLine("We dont have this food");
+                        Console.WriteLine("We dont have " +Order.Name);
                         return;
                     }
-                    ingredient.Count--;
+                    ingredient.Count-=Order.Count;
                     Console.WriteLine(Name + " get " + ingredient.Name);
                     return;
                 }
             }
             Console.WriteLine("Order doesnt exist in Ingedient List");
-        }
-        public bool isAllergiesFood(List<Ingredient> Recipe) {
-            foreach(Ingredient ingredientAllergies in Allergies){
-                foreach(Ingredient ingredientRecipe in Recipe){
-                    if (ingredientAllergies.Name == ingredientRecipe.Name) return true;
-                }
-            }
-            return false;
         }
     }
 }

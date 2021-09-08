@@ -18,18 +18,9 @@ namespace Chiken_Kitchen
             Name = _Name;
             Count = 1;
         }
-        public virtual void Cook(List<Ingredient> allIngredients) 
-        {
-            throw new NotImplementedException();
-        }
-        public virtual void CookWithoutCheck(List<Ingredient> allIngredients)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual bool isEnoughIngredients(List<Ingredient> allIngredients)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual void Cook(List<Ingredient> allIngredients) => throw new NotImplementedException();
+        public virtual void CookWithoutCheck(List<Ingredient> allIngredients) => throw new NotImplementedException();
+        public virtual List<Ingredient> GetRecipe() => new List<Ingredient>();
+        public virtual bool isEnoughIngredients(List<Ingredient> allIngredients) => throw new NotImplementedException();
     }
 }

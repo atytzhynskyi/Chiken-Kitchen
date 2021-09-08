@@ -7,30 +7,64 @@ namespace Chiken_Kitchen
     {
         static void Main(string[] args)
         {
-            
-        }
-        static void FillBaseIngredients(List<Ingredient> allIngredients)
-        {
-            string[] BaseIngredients = "Chicken, Tuna, Potatoes, Asparagus, Milk, Honey, Paprika, Garlic, Water, Lemon, Tomatoes, Pickles, Feta, Vinegar, Rice, Chocolate".Split(", ");
-            foreach(string i in BaseIngredients)
+            List<Ingredient> allIngredients = new List<Ingredient>();
+            FillLists.FillBaseIngredients(allIngredients);
+            FillLists.FillFoodRecipe(allIngredients);
+            List<Customer> customers = new List<Customer>();
+            FillLists.FillCustomers(customers);
+            foreach(Customer customer in customers)
             {
-                allIngredients.Add(new Ingredient(i, 10));
+                if (customer.Name == "Julie Mirage")
+                {
+                    customer.SetOrder(new Ingredient("Fish In Water"), allIngredients);
+                    if (Food.isAllergiesFood(allIngredients, customer.Order, customer)){
+                        Console.WriteLine(customer.Order.Name + " is allergic food for " + customer.Name);
+                        continue;
+                    }
+                    if (customer.Order.Count <= 0) customer.Order.Cook(allIngredients);
+                    customer.GiveFood(allIngredients);
+                }
+                if(customer.Name == "Elon Carousel")
+                {
+                    customer.SetOrder(new Ingredient("Fish In Water"), allIngredients);
+                    if (Food.isAllergiesFood(allIngredients, customer.Order, customer))
+                    {
+                        Console.WriteLine(customer.Order.Name + " is allergic food for " + customer.Name);
+                        continue;
+                    }
+                    if (customer.Order.Count <= 0) customer.Order.Cook(allIngredients);
+                    customer.GiveFood(allIngredients);
+                }
+                if (customer.Name == "Julie Mirage")
+                {
+                    customer.SetOrder(new Ingredient("Emperor Chicken"), allIngredients);
+                    if (Food.isAllergiesFood(allIngredients, customer.Order, customer))
+                    {
+                        Console.WriteLine(customer.Order.Name + " is allergic food for " + customer.Name);
+                        continue;
+                    }
+                    if (customer.Order.Count <= 0) customer.Order.Cook(allIngredients);
+                    customer.GiveFood(allIngredients);
+                }
+                if (customer.Name == "Bernard Unfortunate")
+                {
+                    customer.SetOrder(new Ingredient("Emperor Chicken"), allIngredients);
+                    if (Food.isAllergiesFood(allIngredients, customer.Order, customer))
+                    {
+                        Console.WriteLine(customer.Order.Name + " is allergic food for " + customer.Name);
+                        continue;
+                    }
+                    if (customer.Order.Count <= 0) customer.Order.Cook(allIngredients);
+                    customer.GiveFood(allIngredients);
+                }
             }
-        } // Tomatoes, Pickles, Feta
-        static void FillFoodRecipe(List<Ingredient> allIngredients)
-        {
-            allIngredients.Add(new Food("Emperor Chicken", new Food("Fat Cat Chiken"), new Food("Spicy Sauce"), new Food("Tuna Cake")));
-            allIngredients.Add(new Food("Fat Cat Chiken", new Food("Princess Chicken"), new Food("Youth Sauce"), new Food("Tuna Cake")));
-            allIngredients.Add(new Food("Princess Chicken", new Food("Chicken"), new Food("Youth Sauce")));
-            allIngredients.Add(new Food("Youth Sauce", new Food("Asparagus"), new Food("Milk"), new Food("Honey")));
-            allIngredients.Add(new Food("Spicy Sauce", new Food("Paprika"), new Food("Garlic"), new Food("Water")));
-            allIngredients.Add(new Food("Omega Sauce", new Food("Lemon"), new Food("Water")));
-            allIngredients.Add(new Food("Diamond Salad", new Food("Tomatoes"), new Food("Pickles"), new Food("Feta")));
-            allIngredients.Add(new Food("Ruby Salad", new Food("Tomatoes"), new Food("Vinegar")));
-            allIngredients.Add(new Food("Fries", new Food("Potatoes")));
-            allIngredients.Add(new Food("Smashed Potatoes", new Food("Potatoes")));
-            allIngredients.Add(new Food("Tuna Cake", new Food("Tuna"), new Food("Chocolate"), new Food("Youth Sauce")));
-            allIngredients.Add(new Food("Fish In Water", new Food("Tuna"), new Food("Omega Sauce"), new Food("Ruby Salad")));
         }
     }
 }
+
+/*1. Julie Mirage wants to buy Fish In Water. She gets her Fish in Water.
+3. Julie Mirage wants to buy Emperor Chicken. She gets her Emperor Chicken.
+2. Elon Carousel wants to buy Fish In Water. You have to refuse him service, because one
+dependency uses Chocolate and he is allergic to it.
+4. Bernard Unfortunate wants to buy Emperor Chicken. You have to refuse him service, because
+one dependency uses Potatoes and he is allergic to them.*/
